@@ -13,9 +13,7 @@ import fs from 'fs';
   
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
-  let image_url: string;
-  let req: Request;
-  let res: Response;
+  
   // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   // GET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
@@ -31,8 +29,12 @@ import fs from 'fs';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
+  let image_url: string;
+  let req: Request;
+  let res: Response;
+  
   app.get("/filteredimage", async (req, res) => {
-    let { image_url } = req.query;
+    image_url = req.query;
 
     await filterImageFromURL(image_url).then((image) => {
       fs.readFile(image, (err, data) => {
