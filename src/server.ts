@@ -1,4 +1,4 @@
-import express from 'express';
+import { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 import fs from 'fs';
@@ -6,7 +6,8 @@ import fs from 'fs';
 (async () => {
 
   // Init the Express application
-  const app = express();
+  const express = require('express');
+  const app: Express = express();
 
   // Set the network port
   const port = process.env.PORT || 8082;
@@ -30,10 +31,8 @@ import fs from 'fs';
 
   /**************************************************************************** */
   let image_url: string;
-  let req: Request;
-  let res: Response;
   
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req: Request, res: Response) => {
     image_url = req.query;
 
     await filterImageFromURL(image_url).then((image) => {
@@ -53,7 +52,7 @@ import fs from 'fs';
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req: Request, res: Response ) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
